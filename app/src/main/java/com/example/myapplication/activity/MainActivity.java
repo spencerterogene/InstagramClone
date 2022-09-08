@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.fragments.ComposeFragment;
 import com.example.myapplication.fragments.PostFragment;
+import com.example.myapplication.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,16 +35,13 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment = null;
                 switch (item.getItemId()){
                     case R.id.Action_home:
-                        Toast.makeText(MainActivity.this, "Home", Toast.LENGTH_SHORT).show();
                         fragment = new PostFragment();
                         break;
                     case R.id.Action_compse:
-                        Toast.makeText(MainActivity.this, "Compose", Toast.LENGTH_SHORT).show();
                         fragment = new ComposeFragment();
                         break;
                     case R.id.Action_profile:
-                        Toast.makeText(MainActivity.this, "Profile", Toast.LENGTH_SHORT).show();
-                        fragment = new ComposeFragment();
+                        fragment = new ProfileFragment();
                         break;
                 }
                 fragmentManager.beginTransaction().replace(R.id.flContainer,fragment).commit();
