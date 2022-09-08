@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.app.Application;
 
+import com.example.myapplication.models.Post;
 import com.parse.Parse;
 import com.parse.ParseObject;
 

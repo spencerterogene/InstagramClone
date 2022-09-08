@@ -6,22 +6,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="16dp"
-    tools:context=".LoginActivity"
     android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/tool_bar"
-        android:elevation="12dp"
+        android:layout_marginBottom="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    tools:context=".activity.LoginActivity"
+    >
 
     <EditText
         android:id="@+id/UserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
+        android:layout_margin="16dp"
         android:layout_weight="0"
         android:ems="10"
         android:hint="UserName"
@@ -33,7 +38,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:layout_marginTop="16dp"
+        android:layout_below="@+id/UserName"
+        android:layout_margin="16dp"
         android:ems="10"
         android:hint="password"
         android:inputType="textPassword"
@@ -43,7 +49,8 @@
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_below="@+id/Password"
+        android:layout_margin="16dp"
         android:background="@color/purple_700"
         android:layout_weight="0"
         android:text="Login"
@@ -52,10 +59,11 @@
         android:id="@+id/btnSignup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_margin="16dp"
+        android:layout_below="@+id/btnLogin"
         android:background="@color/green_light25"
         android:layout_weight="0"
         android:text="Sign up"
         />
-
+</RelativeLayout>
 </LinearLayout>

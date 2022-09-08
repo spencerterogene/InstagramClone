@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -11,9 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.myapplication.R;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 public class LoginActivity extends AppCompatActivity {
     public static final String TAG = "LoginActivity";
@@ -28,9 +30,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-//        Toolbar toolbar =  findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setTitle("        Instagram");
+        Toolbar toolbar =  findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         if (ParseUser.getCurrentUser()!=null){
             goMainActivity();
@@ -50,8 +51,35 @@ public class LoginActivity extends AppCompatActivity {
                 loginUser(username,password);
             }
         });
-    }
 
+        btnSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String username = etUsername.getText().toString();
+                String password = etPassword.getText().toString();
+                Signup(username,password);
+            }
+        });
+    }
+    private void Signup(String username, String password){
+        ParseUser user = new ParseUser();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.signUpInBackground(new SignUpCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e!=null) {
+                    goMainActivity();
+                }else{
+                    Log.e(TAG,"Issue with Signup ",e);
+                    Toast.makeText(LoginActivity.this, "Issue with Signup", Toast.LENGTH_SHORT).show();
+
+
+                }
+            }
+        });
+
+    }
     private void loginUser(String username, String password){
         Log.i(TAG,"Attempting to login user"+username);
         ParseUser.logInInBackground(username, password, new LogInCallback() {
@@ -60,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (e != null){
                     Log.e(TAG,"Issue with login ",e);
                     Toast.makeText(LoginActivity.this, "Issue with login", Toast.LENGTH_SHORT).show();
-                    return;
+//                    return;
                 }
                 goMainActivity();
                 Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
@@ -68,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
     private void goMainActivity() {
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }

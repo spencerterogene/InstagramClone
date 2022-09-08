@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.models;
 
 import com.parse.Parse;
 import com.parse.ParseClassName;
@@ -11,6 +11,7 @@ public class Post extends ParseObject {
     public static final String KEY_DESCRIPTION = "Descriptipn";
     public static final String KEY_IMAGE = "Image";
     public static final String KEY_USER = "User";
+    public static final String CREATED_AT="createdAt";
 
     public String getDescription(){
         return getString(KEY_DESCRIPTION);
