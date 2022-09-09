@@ -61,6 +61,16 @@
         android:backgroundTint="@color/twitBleu"
         android:text="Submit"
         android:textColor="@color/black" />
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Submit"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/progress_bg"
+        android:visibility="invisible" />
 
 </RelativeLayout>
 

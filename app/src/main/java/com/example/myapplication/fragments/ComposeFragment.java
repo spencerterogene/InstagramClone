@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.myapplication.models.Post;
@@ -42,6 +43,7 @@ public class ComposeFragment extends Fragment {
     public static  final String TAG = "ComposeFragment";
     EditText Description;
     Button CaptureImage;
+    ProgressBar pbLoading;
     ImageView PostImage;
     Button Submit;
 
@@ -60,6 +62,7 @@ public class ComposeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        pbLoading = view.findViewById(R.id.pbLoading);
         Description = view.findViewById(R.id.Description);
         CaptureImage = view.findViewById(R.id.CaptureImage);
         PostImage = view.findViewById(R.id.PostImage);
@@ -85,7 +88,7 @@ public class ComposeFragment extends Fragment {
                     Toast.makeText(getContext(), "There is no image!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
+                pbLoading.setVisibility(ProgressBar.VISIBLE);
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 savePost(description, currentUser,photoFile);
             }
@@ -139,6 +142,7 @@ public class ComposeFragment extends Fragment {
                 }
                 Log.i(TAG,"Post save was successful!!");
                 Description.setText("");
+                pbLoading.setVisibility(ProgressBar.VISIBLE);
                 PostImage.setImageResource(0);
             }
         });
