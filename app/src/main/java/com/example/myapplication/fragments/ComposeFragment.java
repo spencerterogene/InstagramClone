@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
@@ -68,6 +69,7 @@ public class ComposeFragment extends Fragment {
         PostImage = view.findViewById(R.id.PostImage);
         Submit = view.findViewById(R.id.Submit);
         queryPosts();
+
 
         CaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,7 +140,6 @@ public class ComposeFragment extends Fragment {
             public void done(ParseException e) {
                 if (e !=null){
                     Log.i(TAG,"Error will saving",e);
-                    Toast.makeText(getContext(), "Error will saving!", Toast.LENGTH_SHORT).show();
                 }
                 Log.i(TAG,"Post save was successful!!");
                 Description.setText("");

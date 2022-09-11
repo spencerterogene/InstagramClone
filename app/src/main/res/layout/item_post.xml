@@ -10,10 +10,21 @@
 
     <TextView
         android:id="@+id/username"
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/heure"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_toEndOf="@+id/username"
         android:layout_alignParentTop="true"
         android:text="TextView" />
 
@@ -23,15 +34,65 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/username"
         android:layout_alignParentStart="true"
-        android:layout_margin="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
         tools:srcCompat="@tools:sample/avatars" />
+    <TextView
+        android:id="@+id/coeur"
+        android:layout_marginTop="0dp"
+        android:layout_below="@+id/photo"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_height="wrap_content"
+        app:drawableLeftCompat="@drawable/ic_baseline_favorite_border_24"
+        />
+
+    <TextView
+        android:id="@+id/coeur1"
+        android:layout_below="@+id/photo"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_height="wrap_content"
+        app:drawableLeftCompat="@drawable/ic_baseline_favorite_24"
+        />
+    <TextView
+        android:id="@+id/comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/photo"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@+id/coeur"
+        app:drawableLeftCompat="@drawable/comment_outline" />
+
+    <TextView
+        android:id="@+id/share"
+        android:layout_marginStart="50dp"
+        android:layout_below="@+id/photo"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/comment"
+        app:drawableLeftCompat="@drawable/send"
+        />
+
+    <TextView
+        android:id="@+id/bookmark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/photo"
+        android:layout_marginStart="155dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/share"
+        app:drawableLeftCompat="@drawable/ic_baseline_bookmark_24" />
 
     <TextView
         android:id="@+id/description"
-        android:layout_below="@+id/photo"
+        android:layout_below="@+id/coeur"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="0dp"
         android:text="TextView" />
 </RelativeLayout>

@@ -7,6 +7,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.example.myapplication.models.Post;
 
 import android.util.Log;
@@ -25,6 +27,7 @@ import java.util.List;
 
 
 public class PostFragment extends Fragment {
+    private SwipeRefreshLayout swipeContainer;
     public static final String TAG = "PostFragment";
     private RecyclerView rvPost;
     private PostAdapter adapter;
@@ -47,6 +50,18 @@ public class PostFragment extends Fragment {
         allPost = new ArrayList<>();
         adapter = new PostAdapter(getContext(), allPost);
         rvPost.setAdapter(adapter);
+        swipeContainer = view.findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                queryPosts();
+            }
+        });
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
         rvPost.setLayoutManager(new LinearLayoutManager(getContext()));
         queryPosts();
     }
@@ -62,9 +77,10 @@ public class PostFragment extends Fragment {
                     Log.i(TAG,"Issue with getting posts",e);
                      return;
                 }
-
+                adapter.addAll(posts);
+                adapter.clear();
                 allPost.addAll(posts);
-                adapter.notifyDataSetChanged();
+                swipeContainer.setRefreshing(false);
             }
         });
     }
