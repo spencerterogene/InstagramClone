@@ -14,13 +14,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.myapplication.R;
 import com.example.myapplication.models.Post;
+import com.example.myapplication.models.User;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 
 public class PostAdapter extends  RecyclerView.Adapter<PostAdapter.ViewHolder>{
     private final Context context;
     private final List<Post> posts;
-
+    ParseUser currentUser =  ParseUser.getCurrentUser();
     public PostAdapter(Context context, List<Post> posts) {
         this.context = context;
         this.posts = posts;
@@ -58,7 +60,7 @@ public class PostAdapter extends  RecyclerView.Adapter<PostAdapter.ViewHolder>{
     public  class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView tvUsername;
-        private ImageView ivPhoto;
+        private ImageView ivPhoto, profile;
         private TextView tvDescription;
         private TextView coeur,coeur1,send,bookmark,comment,heure;
 
@@ -74,7 +76,7 @@ public class PostAdapter extends  RecyclerView.Adapter<PostAdapter.ViewHolder>{
             tvUsername = itemView.findViewById(R.id.username);
             tvDescription = itemView.findViewById(R.id.description);
             ivPhoto = itemView.findViewById(R.id.photo);
-
+            profile = itemView.findViewById(R.id.profile);
         }
 
 
@@ -87,6 +89,8 @@ public class PostAdapter extends  RecyclerView.Adapter<PostAdapter.ViewHolder>{
             send = itemView.findViewById(R.id.share);
             bookmark = itemView.findViewById(R.id.bookmark);
             comment = itemView.findViewById(R.id.comment);
+            Glide.with(context).load(currentUser.getParseFile(User.KEY_PROFILE).getUrl()).centerCrop()
+                    .transform(new RoundedCorners(30)).into(profile);
             ParseFile image = post.getImage();
             if(image != null){
                 Glide.with(context).load(post.getImage().getUrl()) .centerCrop() // scale image to fill the entire ImageView

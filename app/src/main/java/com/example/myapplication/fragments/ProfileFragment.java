@@ -1,8 +1,14 @@
 package com.example.myapplication.fragments;
 
+import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,18 +28,27 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
+
 import com.example.myapplication.R;
 
 public class ProfileFragment extends Fragment {
 
-    Button btnSignout;
+    Button btnSignout, Edit;
+    ImageView profile;
     RecyclerView rvPosts;
+    public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
+    private String photoFileName = "photo.jpg";
+    private File photoFile;
     public static final String TAG = "ProfileFragment";
     protected PostAdapter postAdapter;
     protected List<Post> allPosts;
@@ -41,6 +57,8 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvPosts = view.findViewById(R.id.rvposts);
+        Edit = view.findViewById(R.id.Edit);
+        profile = view.findViewById(R.id.profile1);
         allPosts = new ArrayList<>();
         postAdapter = new PostAdapter(getContext(), allPosts);
 
@@ -51,18 +69,52 @@ public class ProfileFragment extends Fragment {
 
         btnSignout = view.findViewById(R.id.btnSignout);
 
-
-        //user can logout with floating button
+        Edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchCamera();
+            }
+        });
         btnSignout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ParseUser.logOut();
                 Intent i = new Intent(getContext(), LoginActivity.class);
                 startActivity(i);
-//                finish();
 
             }
         });
+    }
+
+    private void launchCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        photoFile = getPhotoFileUri(photoFileName);
+        Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider", photoFile);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
+        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
+            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        }
+    }
+
+    public File getPhotoFileUri(String fileName) {
+        File mediaStorageDir = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
+        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
+            Log.d(TAG, "failed to create directory");
+        }
+        return new File(mediaStorageDir.getPath() + File.separator + fileName);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                profile.setImageBitmap(takenImage);
+            } else {
+                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     public void queryPost() {
