@@ -12,6 +12,7 @@
         <entry key="app/src/main/res/drawable/progress_bg.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/resize.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/send.xml" value="0.209375" />
+        <entry key="app/src/main/res/layout/activity_detail.xml" value="0.17300724637681159" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_compose.xml" value="0.19322916666666667" />

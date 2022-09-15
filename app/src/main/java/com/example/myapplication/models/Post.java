@@ -6,8 +6,14 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.parceler.Parcel;
+
 @ParseClassName("Post")
+@Parcel(analyze = Post.class)
 public class Post extends ParseObject {
+    public Post() {
+        // Required empty public constructor
+    }
     public static final String KEY_DESCRIPTION = "Descriptipn";
     public static final String KEY_IMAGE = "Image";
     public static final String KEY_USER = "User";
