@@ -37,6 +37,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
@@ -45,6 +46,7 @@ public class ProfileFragment extends Fragment {
 
     Button btnSignout, Edit;
     ImageView profile;
+    TextView username;
     RecyclerView rvPosts;
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     private String photoFileName = "photo.jpg";
@@ -52,18 +54,21 @@ public class ProfileFragment extends Fragment {
     public static final String TAG = "ProfileFragment";
     protected PostAdapter postAdapter;
     protected List<Post> allPosts;
+    ParseUser currentUser =  ParseUser.getCurrentUser();
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvPosts = view.findViewById(R.id.rvposts);
         Edit = view.findViewById(R.id.Edit);
+        username = view.findViewById(R.id.username);
         profile = view.findViewById(R.id.profile1);
         allPosts = new ArrayList<>();
         postAdapter = new PostAdapter(getContext(), allPosts);
 
         rvPosts.setAdapter(postAdapter);
-
+        username.setText(currentUser.getUsername());
         rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
         queryPost();
 
