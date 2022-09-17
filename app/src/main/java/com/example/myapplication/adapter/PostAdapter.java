@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.myapplication.Constant.DonnerConstant;
 import com.example.myapplication.R;
+import com.example.myapplication.activity.DetailActivity;
 import com.example.myapplication.models.Post;
 import com.example.myapplication.models.User;
 import com.parse.ParseFile;
@@ -29,7 +30,6 @@ import org.parceler.Parcels;
 public class PostAdapter extends  RecyclerView.Adapter<PostAdapter.ViewHolder>{
     private final Context context;
     private final List<Post> posts;
-    ParseUser currentUser =  ParseUser.getCurrentUser();
     public PostAdapter(Context context, List<Post> posts) {
         this.context = context;
         this.posts = posts;
@@ -71,6 +71,8 @@ public class PostAdapter extends  RecyclerView.Adapter<PostAdapter.ViewHolder>{
         private TextView tvDescription;
         private RelativeLayout container;
         private TextView coeur,coeur1,send,bookmark,comment,heure;
+        ParseUser currentUser =  ParseUser.getCurrentUser();
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -92,16 +94,21 @@ public class PostAdapter extends  RecyclerView.Adapter<PostAdapter.ViewHolder>{
             tvDescription.setText(post.getDescription());
             tvUsername.setText(post.getUser().getUsername());
             heure.setText(post.getCreatedAt().toString());
-            coeur = itemView.findViewById(R.id.coeur);
-            coeur1 = itemView.findViewById(R.id.coeur1);
-            send = itemView.findViewById(R.id.share);
-            bookmark = itemView.findViewById(R.id.bookmark);
-            comment = itemView.findViewById(R.id.comment);
+
+            comment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, CommentAdapter.class);
+                    intent.putExtra(DonnerConstant.DATA, Parcels.wrap(post));
+
+
+                }
+            });
 
             container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent();
+                    Intent intent = new Intent(context, DetailActivity.class);
                     intent.putExtra(DonnerConstant.DATA, Parcels.wrap(post));
 
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,ivPhoto,DonnerConstant.TANSITION);
